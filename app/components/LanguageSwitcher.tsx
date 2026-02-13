@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, usePathname, useRouter } from 'next/navigation';
-import { locales, localeNames, type Locale } from '@/i18n/config';
+import { locales, localeNames, type Locale } from '@/app/[lang]/config';
 import { useState, useRef, useEffect } from 'react';
 
 export default function LanguageSwitcher() {
@@ -11,7 +11,7 @@ export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   
-  const currentLocale = (params.locale as Locale) || 'en';
+  const currentLang = (params.lang as Locale) || 'en';
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -24,13 +24,13 @@ export default function LanguageSwitcher() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLocaleChange = (newLocale: Locale) => {
-    // Replace the current locale in the pathname
+  const handleLangChange = (newLang: Locale) => {
+    // Replace the current lang in the pathname
     const segments = pathname.split('/');
     if (locales.includes(segments[1] as Locale)) {
-      segments[1] = newLocale;
+      segments[1] = newLang;
     } else {
-      segments.splice(1, 0, newLocale);
+      segments.splice(1, 0, newLang);
     }
     
     router.push(segments.join('/'));
@@ -59,23 +59,23 @@ export default function LanguageSwitcher() {
           />
         </svg>
         <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">
-          {localeNames[currentLocale]}
+          {localeNames[currentLang]}
         </span>
       </button>
 
       {isOpen && (
         <div className="absolute top-14 start-0 rounded-lg border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900 overflow-hidden">
-          {locales.map((locale) => (
+          {locales.map((lang) => (
             <button
-              key={locale}
-              onClick={() => handleLocaleChange(locale)}
+              key={lang}
+              onClick={() => handleLangChange(lang)}
               className={`block w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
-                currentLocale === locale
+                currentLang === lang
                   ? 'bg-zinc-50 text-zinc-900 font-medium dark:bg-zinc-800 dark:text-zinc-50'
                   : 'text-zinc-700 dark:text-zinc-300'
               }`}
             >
-              {localeNames[locale]}
+              {localeNames[lang]}
             </button>
           ))}
         </div>

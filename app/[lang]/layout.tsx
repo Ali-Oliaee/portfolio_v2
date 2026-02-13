@@ -1,13 +1,12 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { ThemeProvider } from "../contexts/ThemeContext"
+import { IntlProvider } from "../contexts/IntlContext"
 import LanguageSwitcher from "../components/LanguageSwitcher"
 import ThemeToggle from "../components/ThemeToggle"
-import { NextIntlClientProvider } from "next-intl"
-import { getMessages } from "next-intl/server"
-import { localeDirections } from "@/i18n/config"
 import { notFound } from "next/navigation"
-import { locales } from "@/i18n/config"
+import { locales, localeDirections } from "./config"
+import { getDictionary, hasLocale } from "./dictionaries"
 import "../globals.css"
 
 const geistSans = Geist({
@@ -27,26 +26,26 @@ export const metadata: Metadata = {
 
 type Props = {
   children: React.ReactNode
-  params: Promise<{ locale: string }>
+  params: Promise<{ lang: string }>
 }
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }))
+  return locales.map((lang) => ({ lang }))
 }
 
-export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params
+export default async function LangLayout({ children, params }: Props) {
+  const { lang } = await params
 
-  // Validate that the incoming locale parameter is valid
-  if (!locales.includes(locale as "fa" | "en")) {
+  // Validate that the incoming lang parameter is valid
+  if (!hasLocale(lang)) {
     notFound()
   }
 
-  const messages = await getMessages()
-  const direction = localeDirections[locale as keyof typeof localeDirections]
+  const messages = await getDictionary(lang)
+  const direction = localeDirections[lang]
 
   return (
-    <html lang={locale} dir={direction} suppressHydrationWarning>
+    <html lang={lang} dir={direction} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -66,13 +65,13 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider messages={messages}>
+        <IntlProvider messages={messages}>
           <ThemeProvider>
             <ThemeToggle />
             <LanguageSwitcher />
             {children}
           </ThemeProvider>
-        </NextIntlClientProvider>
+        </IntlProvider>
       </body>
     </html>
   )

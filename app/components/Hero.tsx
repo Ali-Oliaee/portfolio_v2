@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef } from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations } from "@/app/contexts/IntlContext"
 import WebGLFluidEnhanced from "webgl-fluid-enhanced"
 import { useTheme } from "../contexts/ThemeContext"
 
