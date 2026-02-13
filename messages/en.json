@@ -1,0 +1,24 @@
+{
+  "home": {
+    "title": "Welcome to Your Portfolio",
+    "subtitle": "Try toggling the theme using the button in the top-right corner!",
+    "themeCard1": {
+      "title": "Light & Dark Themes",
+      "description": "This portfolio supports both light and dark color themes with smooth transitions."
+    },
+    "themeCard2": {
+      "title": "Persistent Theme",
+      "description": "Your theme preference is saved in localStorage and persists across sessions."
+    },
+    "themeCard3": {
+      "title": "Custom Colors",
+      "description": "Easily customizable color variables for both themes in globals.css."
+    },
+    "deployButton": "Deploy Now",
+    "docsButton": "Documentation"
+  },
+  "metadata": {
+    "title": "My Portfolio",
+    "description": "Welcome to my portfolio"
+  }
+}
