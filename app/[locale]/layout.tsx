@@ -5,9 +5,9 @@ import LanguageSwitcher from "../components/LanguageSwitcher"
 import ThemeToggle from "../components/ThemeToggle"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
-import { localeDirections } from "@/i18n.config"
+import { localeDirections } from "@/i18n/config"
 import { notFound } from "next/navigation"
-import { locales } from "@/i18n.config"
+import { locales } from "@/i18n/config"
 import "../globals.css"
 
 const geistSans = Geist({
