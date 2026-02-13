@@ -17,6 +17,14 @@
     "deployButton": "Deploy Now",
     "docsButton": "Documentation"
   },
+  "hero": {
+    "greeting": "Hey, I'm 👋",
+    "name": "Your Name",
+    "role": "Full Stack Developer",
+    "description": "I craft beautiful and functional web experiences with modern technologies. Passionate about clean code and innovative solutions.",
+    "viewWork": "View My Work",
+    "contact": "Get In Touch"
+  },
   "metadata": {
     "title": "My Portfolio",
     "description": "Welcome to my portfolio"
