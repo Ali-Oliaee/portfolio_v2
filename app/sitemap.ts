@@ -2,6 +2,8 @@ import { MetadataRoute } from "next";
 import { locales } from "./[lang]/config";
 import { siteConfig } from "./config/seo";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
 
