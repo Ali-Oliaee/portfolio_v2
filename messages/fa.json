@@ -28,5 +28,13 @@
   "metadata": {
     "title": "نمونه کار من",
     "description": "به نمونه کار من خوش آمدید"
+  },
+  "nav": {
+    "about": "درباره",
+    "projects": "پروژه‌ها",
+    "experience": "تجربیات",
+    "stack": "تکنولوژی‌ها",
+    "testimonials": "نظرات",
+    "contact": "تماس"
   }
 }

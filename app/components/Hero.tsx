@@ -1,9 +1,13 @@
 "use client"
 
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useTranslations } from "@/app/contexts/IntlContext"
 import WebGLFluidEnhanced from "webgl-fluid-enhanced"
 import { useTheme } from "../contexts/ThemeContext"
+import dynamic from "next/dynamic"
+
+// Dynamically import the 3D model component (client-side only)
+const Model3D = dynamic(() => import("./Model3D"), { ssr: false })
 
 export default function Hero() {
   const t = useTranslations("hero")
@@ -113,46 +117,51 @@ export default function Hero() {
         style={{ width: "100%", height: "100%", pointerEvents: "auto" }}
       />
 
-      {/* Content - Above fluid (pointer-events-none allows mouse to pass through to fluid) */}
-      <div className="pointer-events-none absolute inset-0 z-20 flex h-full w-full items-center justify-center">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center px-6 text-center sm:px-8 lg:px-12">
-        {/* Greeting */}
-        <div className="pointer-events-none mb-4">
-          <p className="text-lg font-medium text-zinc-600 dark:text-zinc-400">
+      {/* Content Layout - Text above and below 3D model */}
+      <div className="pointer-events-none absolute inset-0 z-10 flex h-full w-full flex-col items-center justify-center px-6 sm:px-8 lg:px-12">
+        {/* Top Content - Greeting and Name */}
+        <div className="mb-8 flex flex-col items-center text-center">
+          {/* Greeting */}
+          <p className="mb-3 text-lg font-medium text-zinc-600 dark:text-zinc-400">
             {t("greeting")}
           </p>
+
+          {/* Main heading */}
+          <h1 className="mb-4 text-5xl font-bold tracking-tight text-black dark:text-white sm:text-6xl md:text-7xl">
+            <span className="inline-block animate-fade-in-up">Ali</span>
+          </h1>
+
+          {/* Role/Title */}
+          <h2 className="text-2xl font-semibold text-zinc-700 dark:text-zinc-300 sm:text-3xl md:text-4xl">
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-purple-400">
+              {t("role")}
+            </span>
+          </h2>
         </div>
 
-        {/* Main heading */}
-        <h1 className="pointer-events-none mb-6 text-5xl font-bold tracking-tight text-black dark:text-white sm:text-6xl md:text-7xl lg:text-8xl">
-          <span className="inline-block animate-fade-in-up">
-            {/* {t('name')} */} Ali
-          </span>
-        </h1>
-
-        {/* Role/Title */}
-        <h2 className="pointer-events-none mb-8 text-3xl font-semibold text-zinc-700 dark:text-zinc-300 sm:text-4xl md:text-5xl">
-          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-purple-400">
-            {t("role")}
-          </span>
-        </h2>
-
-        {/* Description */}
-        <p className="pointer-events-none mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-xl">
-          {t("description")}
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="pointer-events-auto flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <button className="group relative overflow-hidden rounded-full bg-black px-8 py-4 text-base font-semibold text-white transition-all hover:scale-105 hover:shadow-lg dark:bg-white dark:text-black">
-            <span className="relative z-10">{t("viewWork")}</span>
-            <div className="absolute inset-0 -z-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 transition-opacity group-hover:opacity-100" />
-          </button>
-
-          <button className="rounded-full border-2 border-zinc-300 bg-transparent px-8 py-4 text-base font-semibold text-black transition-all hover:scale-105 hover:border-black hover:bg-black hover:text-white dark:border-zinc-700 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black">
-            {t("contact")}
-          </button>
+        {/* 3D Model - Center */}
+        <div className="pointer-events-auto z-20">
+          <Model3D />
         </div>
+
+        {/* Bottom Content - Description and Buttons */}
+        <div className="mt-8 flex flex-col items-center text-center">
+          {/* Description */}
+          <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-lg">
+            {t("description")}
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="pointer-events-auto flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <button className="group relative overflow-hidden rounded-full bg-black px-8 py-4 text-base font-semibold text-white transition-all hover:scale-105 hover:shadow-lg dark:bg-white dark:text-black">
+              <span className="relative z-10">{t("viewWork")}</span>
+              <div className="absolute inset-0 -z-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 transition-opacity group-hover:opacity-100" />
+            </button>
+
+            <button className="rounded-full border-2 border-zinc-300 bg-transparent px-8 py-4 text-base font-semibold text-black transition-all hover:scale-105 hover:border-black hover:bg-black hover:text-white dark:border-zinc-700 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black">
+              {t("contact")}
+            </button>
+          </div>
         </div>
       </div>
 

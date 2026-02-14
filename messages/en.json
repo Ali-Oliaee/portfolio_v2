@@ -28,5 +28,13 @@
   "metadata": {
     "title": "My Portfolio",
     "description": "Welcome to my portfolio"
+  },
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "experience": "Experience",
+    "stack": "Stack",
+    "testimonials": "Testimonials",
+    "contact": "Contact"
   }
 }
