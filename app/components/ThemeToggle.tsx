@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "../contexts/ThemeContext"
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <button
       onClick={toggleTheme}
-      className="fixed top-6 end-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-white shadow-lg transition-all hover:scale-110 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+      className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/20 backdrop-blur-sm transition-all hover:bg-white/30 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/20 cursor-pointer"
       aria-label="Toggle theme"
     >
       {theme === "light" ? (
@@ -43,5 +43,5 @@ export default function ThemeToggle() {
         </svg>
       )}
     </button>
-  );
+  )
 }

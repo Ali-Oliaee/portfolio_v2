@@ -2,11 +2,10 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { ThemeProvider } from "../contexts/ThemeContext"
 import { IntlProvider } from "../contexts/IntlContext"
-import LanguageSwitcher from "../components/LanguageSwitcher"
-import ThemeToggle from "../components/ThemeToggle"
 import { notFound } from "next/navigation"
 import { locales, localeDirections } from "./config"
 import { getDictionary, hasLocale } from "./dictionaries"
+import Header from "../components/Header"
 import "../globals.css"
 
 const geistSans = Geist({
@@ -67,8 +66,7 @@ export default async function LangLayout({ children, params }: Props) {
       >
         <IntlProvider messages={messages}>
           <ThemeProvider>
-            <ThemeToggle />
-            <LanguageSwitcher />
+            <Header />
             {children}
           </ThemeProvider>
         </IntlProvider>

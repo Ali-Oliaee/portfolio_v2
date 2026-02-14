@@ -1,47 +1,50 @@
-"use client";
+"use client"
 
-import { useParams, usePathname, useRouter } from 'next/navigation';
-import { locales, localeNames, type Locale } from '@/app/[lang]/config';
-import { useState, useRef, useEffect } from 'react';
+import { useParams, usePathname, useRouter } from "next/navigation"
+import { locales, localeNames, type Locale } from "@/app/[lang]/config"
+import { useState, useRef, useEffect } from "react"
 
 export default function LanguageSwitcher() {
-  const params = useParams();
-  const pathname = usePathname();
-  const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  
-  const currentLang = (params.lang as Locale) || 'en';
+  const params = useParams()
+  const pathname = usePathname()
+  const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const currentLang = (params.lang as Locale) || "en"
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false)
       }
-    };
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
 
   const handleLangChange = (newLang: Locale) => {
     // Replace the current lang in the pathname
-    const segments = pathname.split('/');
+    const segments = pathname.split("/")
     if (locales.includes(segments[1] as Locale)) {
-      segments[1] = newLang;
+      segments[1] = newLang
     } else {
-      segments.splice(1, 0, newLang);
+      segments.splice(1, 0, newLang)
     }
-    
-    router.push(segments.join('/'));
-    setIsOpen(false);
-  };
+
+    router.push(segments.join("/"))
+    setIsOpen(false)
+  }
 
   return (
-    <div ref={dropdownRef} className="fixed top-6 start-6 z-50">
+    <div ref={dropdownRef} className="relative z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-12 items-center justify-center gap-2 rounded-full border border-zinc-200 bg-white px-4 shadow-lg transition-all hover:scale-105 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+        className="flex h-12 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/20 px-4 backdrop-blur-sm transition-all hover:bg-white/30 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/20 cursor-pointer"
         aria-label="Change language"
       >
         <svg
@@ -64,15 +67,15 @@ export default function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute top-14 start-0 rounded-lg border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900 overflow-hidden">
+        <div className="absolute top-full mt-2 end-0 rounded-lg border border-white/20 bg-white/80 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-black/80 overflow-hidden">
           {locales.map((lang) => (
             <button
               key={lang}
               onClick={() => handleLangChange(lang)}
-              className={`block w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
+              className={`block w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer ${
                 currentLang === lang
-                  ? 'bg-zinc-50 text-zinc-900 font-medium dark:bg-zinc-800 dark:text-zinc-50'
-                  : 'text-zinc-700 dark:text-zinc-300'
+                  ? "bg-zinc-50 text-zinc-900 font-medium dark:bg-zinc-800 dark:text-zinc-50"
+                  : "text-zinc-700 dark:text-zinc-300"
               }`}
             >
               {localeNames[lang]}
@@ -81,5 +84,5 @@ export default function LanguageSwitcher() {
         </div>
       )}
     </div>
-  );
+  )
 }
