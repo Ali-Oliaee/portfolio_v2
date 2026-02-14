@@ -4,10 +4,6 @@ import { useEffect, useRef } from "react"
 import { useTranslations } from "@/app/contexts/IntlContext"
 import WebGLFluidEnhanced from "webgl-fluid-enhanced"
 import { useTheme } from "../contexts/ThemeContext"
-import dynamic from "next/dynamic"
-
-// Dynamically import the 3D model component (client-side only)
-const Model3D = dynamic(() => import("./Model3D"), { ssr: false })
 
 export default function Hero() {
   const t = useTranslations("hero")
@@ -40,31 +36,40 @@ export default function Hero() {
     // Configure the simulation based on theme
     fluidRef.current.setConfig({
       simResolution: 128,
-      dyeResolution: 1024,
-      densityDissipation: 0.98,
-      velocityDissipation: 0.99,
-      pressure: 0.8,
-      pressureIterations: 10,
-      curl: 3,
-      splatRadius: 0.25,
-      splatForce: 6000,
+      dyeResolution: 768,
+
+      densityDissipation: 0.985,
+      velocityDissipation: 0.992,
+      pressure: 0.9,
+      pressureIterations: 14,
+
+      curl: 1.35, // کمی بیشتر برای بازی رنگ و حرکت
+      splatRadius: 0.12,
+      splatForce: 2600, // یه ذره بیشتر، ولی هنوز امن از blowout
+
       shading: true,
-      colorful: true,
-      colorUpdateSpeed: 8,
+
+      colorful: true, // ✅ تنوع رنگی برمی‌گرده
+      colorUpdateSpeed: 5, // آرام‌تر از 8، شیک‌تر از حالت neon
+
       colorPalette: theme === "light" ? lightModePalette : darkModePalette,
+
       hover: true,
+
+      transparent: true,
       backgroundColor: theme === "light" ? "#ffffff" : "#000000",
-      transparent: false,
-      brightness: theme === "light" ? 0.6 : 0.3,
+      brightness: theme === "light" ? 0.35 : 0.25,
+
       bloom: true,
-      bloomIterations: 8,
+      bloomIterations: 6,
       bloomResolution: 256,
-      bloomIntensity: theme === "light" ? 0.6 : 0.8,
-      bloomThreshold: 0.6,
-      bloomSoftKnee: 0.7,
+      bloomIntensity: theme === "light" ? 0.28 : 0.38,
+      bloomThreshold: 0.78, // ✅ کلید ضد-هاله
+      bloomSoftKnee: 0.25,
+
       sunrays: true,
       sunraysResolution: 196,
-      sunraysWeight: 1.0,
+      sunraysWeight: 0.22, // کم ولی موجود
     })
 
     // Start the simulation
@@ -109,7 +114,13 @@ export default function Hero() {
   }, [theme])
 
   return (
-    <section className="relative h-screen w-screen overflow-hidden bg-white dark:bg-black">
+    <section
+      className="relative h-screen w-screen overflow-hidden bg-white dark:bg-black"
+      style={{
+        background: theme === "light" ? "#f5f5f5" : "#001",
+        position: "relative",
+      }}
+    >
       {/* WebGL Fluid Container - Behind everything */}
       <div
         ref={containerRef}
@@ -139,10 +150,7 @@ export default function Hero() {
           </h2>
         </div>
 
-        {/* 3D Model - Center */}
-        <div className="pointer-events-auto z-20">
-          <Model3D />
-        </div>
+        <div className="pointer-events-auto z-20"></div>
 
         {/* Bottom Content - Description and Buttons */}
         <div className="mt-8 flex flex-col items-center text-center">
