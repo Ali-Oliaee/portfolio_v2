@@ -174,9 +174,13 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="pointer-events-none absolute bottom-8 left-1/2 z-30 -translate-x-1/2 animate-bounce">
+      <a
+        href="#about"
+        className="pointer-events-auto absolute bottom-8 left-1/2 z-30 -translate-x-1/2 animate-bounce cursor-pointer transition-transform hover:scale-110"
+        aria-label="Scroll to about section"
+      >
         <svg
-          className="h-6 w-6 text-zinc-400"
+          className="h-6 w-6 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -186,7 +190,7 @@ export default function Hero() {
         >
           <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>
-      </div>
+      </a>
     </section>
   )
 }

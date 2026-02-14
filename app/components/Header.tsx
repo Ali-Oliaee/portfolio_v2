@@ -3,21 +3,32 @@
 import { useTranslations } from "../contexts/IntlContext"
 import ThemeToggle from "./ThemeToggle"
 import LanguageSwitcher from "./LanguageSwitcher"
+import { useState, useEffect } from "react"
 
 export default function Header() {
   const t = useTranslations("nav")
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const navItems = [
     {
       key: "about",
-      icon: (
+      icon: (size: string) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="h-5 w-5"
+          className={`${size} transition-all duration-500`}
         >
           <path
             strokeLinecap="round"
@@ -29,14 +40,14 @@ export default function Header() {
     },
     {
       key: "skills",
-      icon: (
+      icon: (size: string) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="h-5 w-5"
+          className={`${size} transition-all duration-500`}
         >
           <path
             strokeLinecap="round"
@@ -48,14 +59,14 @@ export default function Header() {
     },
     {
       key: "experience",
-      icon: (
+      icon: (size: string) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="h-5 w-5"
+          className={`${size} transition-all duration-500`}
         >
           <path
             strokeLinecap="round"
@@ -67,14 +78,14 @@ export default function Header() {
     },
     {
       key: "projects",
-      icon: (
+      icon: (size: string) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="h-5 w-5"
+          className={`${size} transition-all duration-500`}
         >
           <path
             strokeLinecap="round"
@@ -86,14 +97,14 @@ export default function Header() {
     },
     {
       key: "testimonials",
-      icon: (
+      icon: (size: string) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="h-5 w-5"
+          className={`${size} transition-all duration-500`}
         >
           <path
             strokeLinecap="round"
@@ -105,14 +116,14 @@ export default function Header() {
     },
     {
       key: "contact",
-      icon: (
+      icon: (size: string) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="h-5 w-5"
+          className={`${size} transition-all duration-500`}
         >
           <path
             strokeLinecap="round"
@@ -125,38 +136,101 @@ export default function Header() {
   ]
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/100 bg-white/50 backdrop-blur-xs backdrop-saturate-5 dark:border-white/2 dark:bg-black/10">
-      <div className="mx-auto max-w-7xl px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Left: Avatar and Name */}
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 " />
-            <span className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-              Ali Oliaee
-            </span>
-          </div>
-
-          {/* Center: Navigation */}
-          <nav className="flex items-center gap-1">
-            {navItems.map((item) => (
-              <a
-                key={item.key}
-                href={`#${item.key}`}
-                className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-zinc-700 transition-all hover:bg-white/40 hover:text-zinc-900 hover:backdrop-blur-sm dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-zinc-100"
+    <header
+      className={`fixed left-0 right-0 z-50 ${isScrolled ? "top-4 px-6" : "top-0"}`}
+      style={{
+        transition: "all 0.5s ease-in-out",
+      }}
+    >
+      <div
+        className={`mx-auto ${isScrolled ? "max-w-2xl" : "max-w-full"}`}
+        style={{
+          transition: "max-width 0.5s ease-in-out",
+        }}
+      >
+        <div
+          className={`backdrop-blur-xl backdrop-saturate-150 ${
+            isScrolled
+              ? "border rounded-full border-white/10 bg-white/5 px-6 py-2 dark:border-white/5 dark:bg-black/10"
+              : "rounded-none border-b border-white/10 bg-white/5 px-6 py-4 dark:border-white/5 dark:bg-black/10"
+          }`}
+          style={{
+            transition: "all 0.5s ease-in-out",
+          }}
+        >
+          <div className="flex items-center justify-between">
+            {/* Left: Avatar and Name */}
+            <div
+              className={`flex items-center ${isScrolled ? "gap-2" : "gap-3"}`}
+            >
+              <div
+                className={`rounded-full bg-gradient-to-br from-blue-500 to-blue-600 ${
+                  isScrolled ? "h-6 w-6" : "h-10 w-10"
+                }`}
+                style={{
+                  transition: "all 0.5s ease-in-out",
+                }}
+              />
+              <span
+                className={`font-semibold text-zinc-900 dark:text-zinc-100 ${
+                  isScrolled ? "text-sm" : "text-lg"
+                }`}
+                style={{
+                  transition: "all 0.5s ease-in-out",
+                }}
               >
-                {item.icon}
-                <span>{t(item.key)}</span>
-              </a>
-            ))}
-          </nav>
+                Ali Oliaee
+              </span>
+            </div>
 
-          {/* Right: Theme and Language Togglers */}
-          <div className="flex items-center gap-3">
-            {/* Language Switcher */}
-            <LanguageSwitcher />
+            {/* Center: Navigation */}
+            <nav className="flex items-center gap-1">
+              {navItems.map((item) => (
+                <a
+                  key={item.key}
+                  href={`#${item.key}`}
+                  className={`flex items-center rounded-lg font-medium text-zinc-700 hover:scale-105 hover:bg-white/40 hover:text-zinc-900 hover:backdrop-blur-sm dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-zinc-100 ${
+                    isScrolled
+                      ? "gap-0 px-2 py-1 text-xs"
+                      : "gap-2 px-4 py-2 text-sm"
+                  }`}
+                  style={{
+                    transition: "all 0.5s ease-in-out",
+                  }}
+                >
+                  {item.icon(isScrolled ? "h-4 w-4" : "h-6 w-6")}
+                  <span
+                    className={`whitespace-nowrap ${
+                      isScrolled
+                        ? "max-w-0 translate-x-2 overflow-hidden opacity-0"
+                        : "max-w-xs translate-x-0 opacity-100"
+                    }`}
+                  >
+                    {t(item.key)}
+                  </span>
+                </a>
+              ))}
+            </nav>
 
-            {/* Theme Toggle */}
-            <ThemeToggle />
+            <div className={`flex items-center ${isScrolled ? "" : "gap-3"}`}>
+              <div
+                className={`${isScrolled ? "scale-75" : "scale-100"}`}
+                style={{
+                  transition: "all 0.5s ease-in-out",
+                }}
+              >
+                <LanguageSwitcher />
+              </div>
+
+              <div
+                className={`${isScrolled ? "scale-75" : "scale-100"}`}
+                style={{
+                  transition: "all 0.5s ease-in-out",
+                }}
+              >
+                <ThemeToggle />
+              </div>
+            </div>
           </div>
         </div>
       </div>

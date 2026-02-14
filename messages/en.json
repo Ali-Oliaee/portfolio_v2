@@ -36,5 +36,21 @@
     "projects": "Projects",
     "testimonials": "Testimonials",
     "contact": "Contact"
+  },
+  "about": {
+    "title": "About Me",
+    "fullText": "I'm a passionate developer with a love for creating elegant solutions to complex problems. My journey in tech started years ago, and since then, I've been constantly learning and evolving. I believe in writing clean, maintainable code and creating user experiences that truly matter. When I'm not coding, you'll find me exploring new technologies, contributing to open source, or sharing knowledge with the community. I thrive in collaborative environments and enjoy tackling challenges that push me to grow both professionally and personally.",
+    "infoTitle": "What I Bring to the Table",
+    "infoDescription": "Combining technical expertise with creative problem-solving, I focus on delivering high-quality solutions that make a real impact. My approach emphasizes clean code, user-centered design, and continuous improvement.",
+    "badges": {
+      "experience": "Experience",
+      "experienceValue": "5+ Years",
+      "projects": "Projects",
+      "projectsValue": "50+",
+      "awards": "Awards",
+      "awardsValue": "10+",
+      "coffee": "Coffee Cups",
+      "coffeeValue": "∞"
+    }
   }
 }
