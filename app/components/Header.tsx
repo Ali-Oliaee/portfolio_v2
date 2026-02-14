@@ -4,6 +4,7 @@ import { useTranslations } from "../contexts/IntlContext"
 import ThemeToggle from "./ThemeToggle"
 import LanguageSwitcher from "./LanguageSwitcher"
 import { useState, useEffect } from "react"
+import Image from "next/image"
 
 export default function Header() {
   const t = useTranslations("nav")
@@ -164,13 +165,21 @@ export default function Header() {
               className={`flex items-center ${isScrolled ? "gap-2" : "gap-3"}`}
             >
               <div
-                className={`rounded-full bg-gradient-to-br from-blue-500 to-blue-600 ${
+                className={`relative rounded-full overflow-hidden ${
                   isScrolled ? "h-6 w-6" : "h-10 w-10"
                 }`}
                 style={{
                   transition: "all 0.5s ease-in-out",
                 }}
-              />
+              >
+                <Image
+                  src="/avatar.png"
+                  alt="Ali Oliaee"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
               <span
                 className={`font-semibold text-zinc-900 dark:text-zinc-100 ${
                   isScrolled ? "text-sm" : "text-lg"
